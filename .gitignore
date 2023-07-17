@@ -1,0 +1,25 @@
+# Go binary and object files
+*.exe
+*.o
+*.obj
+
+# Go test and coverage files
+*.test
+*.out
+*.cover
+*.prof
+
+# Go dependency directories
+/vendor/
+/go.sum
+
+# Build output directory
+/build/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+
+# Compiled output
+/bin/
