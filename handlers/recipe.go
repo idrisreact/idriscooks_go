@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"errors"
+	"fmt"
 	"idrisgo/database"
 	"idrisgo/models"
 	"strconv"
@@ -68,6 +69,33 @@ func GetRecipeById(c *fiber.Ctx) (error) {
 
 
 	return c.JSON(recipe)
+}
+
+func SearchRecipeByName(c *fiber.Ctx)error{
+
+	name := c.Query("name")
+	fmt.Println(name)
+
+	var recipes []models.Recipe
+
+	result := database.Db.DB.Where("name Like ?","%"+name+"%").Find(&recipes)
+
+	if result.Error != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message":"failed to retrieve recipe",
+		})
+	}
+
+	if len(recipes) == 0 {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+					"message":"missing recipe",
+			 	})
+	}
+
+
+
+	return c.JSON(recipes)
+
 }
 
 func CreateRecipes(c *fiber.Ctx) error {
