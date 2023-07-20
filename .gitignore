@@ -23,3 +23,5 @@
 
 # Compiled output
 /bin/
+
+.env
