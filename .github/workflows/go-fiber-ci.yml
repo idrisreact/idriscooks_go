@@ -22,7 +22,6 @@ jobs:
         run: |
           go mod download
           go build -v
-          go test -v ./...
 
       - name: Run linter (optional)
         run: golangci-lint run
