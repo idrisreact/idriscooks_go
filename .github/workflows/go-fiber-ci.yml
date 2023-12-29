@@ -20,7 +20,7 @@ jobs:
 
       - name: Build and test Go application
         run: |
-          cmd cmd
+          cd cmd
           go mod download
           go build -v
 
