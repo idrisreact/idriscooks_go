@@ -1,9 +1,24 @@
-FROM golang:1.19.0
+# Install required Go version
+FROM golang:1.18-alpine AS build
 
-WORKDIR /usr/src/app
+# Set working directory
+WORKDIR /app
 
-RUN go install github.com/cosmtrek/air@latest
+# Download dependencies
+RUN go get github.com/cosmtrek/air@latest
+RUN go mod download
 
-COPY . .
+# Copy source code
+COPY . . 
 
-RUN go mod tidy
+# Build application
+RUN go build -o /go/bin/app
+
+# Use minimal base image 
+FROM alpine:latest
+
+# Copy built binary
+COPY --from=build /go/bin/app /app/
+
+# Run app
+CMD ["/app/app"]
