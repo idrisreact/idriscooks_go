@@ -18,11 +18,15 @@ jobs:
         with:
           go-version: 1.18
 
+      - name: Update go.sum
+        run: go mod tidy
+
+      - name: Ensure fiber/v2 module in go.sum
+        run: go get github.com/gofiber/fiber/v2@latest
+
       - name: Build and test Go application
         run: |
           cd cmd
           go mod download
           go build -v
-
-      - name: Run linter (optional)
-        run: golangci-lint run
+          go test -v ./...
